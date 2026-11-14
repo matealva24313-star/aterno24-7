@@ -5,14 +5,13 @@ function createBot() {
         host: '3bn2.aternos.me',
         port: 25565,
         username: 'Raboot_356',
-        version: '1.21.1', // CAMBIA ESTO por la version exacta de tu server en Aternos
+        version: '1.21.1',
         connectTimeout: 30000,
         keepAlive: true,
     });
 
     bot.on('spawn', () => {
         console.log(`[NPC] El bot apareció en el mapa.`);
-        // Si tu server pide login, descomenta la linea de abajo y pone tu contra:
         // setTimeout(() => bot.chat('/login erickJKN'), 4000);
     });
 
@@ -33,9 +32,16 @@ function createBot() {
                 await new Promise(r => setTimeout(r, 2000));
                 chest.close();
             }
-            await new Promise(r => setTimeout(r, 1000));
-            bot.setControlState('jump', true);
-            setTimeout(() => bot.setControlState('jump', false), 500);
+
+            // ANTI-AFK SEGURO: gira la cabeza y hace sneak, NO salta
+            // Esto no lo detecta el anti-cheat como movimiento inválido
+            await bot.look(Math.random() * Math.PI * 2, 0, true);
+            bot.setControlState('sneak', true);
+            await new Promise(r => setTimeout(r, 500));
+            bot.setControlState('sneak', false);
+            bot.swingArm();
+            console.log('[NPC] Anti-AFK hecho sin saltar.');
+
         } catch (err) {
             console.log(`[NPC] Error en ciclo: ${err.message}`);
         }
