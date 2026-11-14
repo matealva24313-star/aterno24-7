@@ -61,8 +61,13 @@ function createBot() {
         // mineflayer igual dispara 'end' después, ahí reconecta
     });
 
-    bot.on('kicked', (reason) => {
-        console.log(`[NPC] Kickeado: ${reason}`);
+    bot.on('kicked', (reason, loggedIn) => {
+    console.log(`[NPC] KICKEADO MOTIVO REAL: ${JSON.stringify(reason, null, 2)}`);
+});
+
+bot.on('messagestr', (msg) => {
+    console.log(`[CHAT] ${msg}`);
+});
     });
 }
 
