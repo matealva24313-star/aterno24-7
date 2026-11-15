@@ -1,0 +1,8 @@
+{
+  "name": "aterno24-7",
+  "version": "1.0.0",
+  "main": "bot.js",
+  "dependencies": {
+    "mineflayer": "github:PrismarineJS/mineflayer"
+  }
+}
