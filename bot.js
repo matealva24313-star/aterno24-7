@@ -5,25 +5,27 @@ function createBot() {
         host: '3bn2.aternos.me',
         port: 25565,
         username: 'Raboot_356',
-        version: '1.21.1', // <-- OJO, esto tiene que ser EXACTO a tu server
+        version: '26.1',
         connectTimeout: 30000,
     });
 
     bot.on('spawn', () => {
-        console.log(`[NPC] Spawneé, no hago NADA, solo quedo quieto.`);
-        // Desactivamos la física del bot para que no mande paquetes de movimiento
-        bot.physics.enabled = false;
+        console.log(`[NPC] Entré bien!`);
     });
+
+    setInterval(() => {
+        if (!bot || !bot.entity) return;
+        bot.look(Math.random() * Math.PI * 2, 0, true);
+        bot.swingArm();
+        console.log('[NPC] Anti-AFK');
+    }, 45000);
 
     bot.on('kicked', (reason) => {
         console.log(`[NPC] KICKEADO: ${JSON.stringify(reason)}`);
     });
 
     bot.on('error', (err) => console.log(`[NPC] Error: ${err.message}`));
-    bot.on('end', () => {
-        console.log(`[NPC] Desconectado, reintento en 20s`);
-        setTimeout(createBot, 20000);
-    });
+    bot.on('end', () => setTimeout(createBot, 20000));
 }
 
 createBot();
